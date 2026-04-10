@@ -19,7 +19,7 @@ type Movie struct {
 
 func main() {
 	var err error
-	db, err = sql.Open("postgres", "user=almat dbname=movies sslmode=disable")
+	db, err = sql.Open("postgres", "host=localhost user=almat dbname=movies sslmode=disable")
 	if err != nil {
 		panic(err)
 	}
@@ -27,13 +27,18 @@ func main() {
 	r := gin.Default()
 
 	r.GET("/movies", func(c *gin.Context) {
-		rows, _ := db.Query("SELECT id, title, genre, year, rating FROM movies")
+		rows, err := db.Query("SELECT id, title, genre, year, rating FROM movies")
+		if err != nil {
+			c.JSON(500, gin.H{"error": err.Error()})
+			return
+		}
 		defer rows.Close()
 		var movies []Movie
 		for rows.Next() {
 			var m Movie
 			rows.Scan(&m.ID, &m.Title, &m.Genre, &m.Year, &m.Rating)
 			movies = append(movies, m)
+
 		}
 		c.JSON(200, movies)
 	})
