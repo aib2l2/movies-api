@@ -7,7 +7,7 @@ REST API for managing movies, built with Go, Gin, and PostgreSQL.
 - Gin
 - PostgreSQL
 
-## Getting Started
+##Getting started
 
 1. Create database:
 
@@ -25,7 +25,7 @@ CREATE TABLE movies (
 
 go build main.go && ./main
 
-## Endpoints
+##Endpoints
 
 GET    /movies         - Get all movies
 GET    /movies/top     - Get top 5 by rating
@@ -33,7 +33,7 @@ POST   /movies         - Add a movie
 PUT    /movies/:id     - Update a movie
 DELETE /movies/:title  - Delete a movie
 
-## Example
+##Example
 
 curl -X POST http://localhost:8080/movies \
 -H "Content-Type: application/json" \
